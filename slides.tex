@@ -1,0 +1,74 @@
+\documentclass{beamer}
+
+\usetheme[bullet=circle,
+          titleline=true,
+          pageofpages=of,
+          alternativetitlepage=true]{Torino}
+
+\usepackage{color}
+
+\usepackage{ragged2e}
+\usepackage{hyphenat}
+\usepackage{booktabs}
+
+\usepackage{tikz}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{automata}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{decorations}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\usepackage{highlight/pythonhighlight}
+
+\definecolor{MyGreen}{rgb}{0.40,0.80,0.20}
+
+\title{Understanding importance of automated software testing}
+\author{Mateusz Paprocki \texttt{<mattpap@gmail.com>}}
+\institute{SymPy Development Team}
+\date{\today}
+
+\newenvironment{jblock}[1]{
+    \begin{block}{#1}\justifying\nohyphens
+}{
+    \end{block}
+}
+
+\begin{document}
+
+\setbeamercovered{transparent}
+
+\frame{\titlepage}
+
+\begin{frame}[fragile]
+    \frametitle{Presentation plan}
+
+    \begin{itemize}
+        \item item
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Title}
+    \framesubtitle{Subtitle}
+
+    \begin{itemize}
+        \item item
+    \end{itemize}
+    \pause
+    \begin{python}
+    code
+    \end{python}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        \vskip+0.5cm
+        \textbf{\LARGE Thank you for your attention!}
+    \end{center}
+\end{frame}
+
+\end{document}
