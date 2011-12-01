@@ -1,8 +1,16 @@
 import os
 env = Environment(ENV=os.environ)
 
-pdf = env.PDF(target='output/slides.pdf', source='slides.tex')
-Depends(pdf, ['slides.tex', 'slides.bib'])
+name = 'slides'
 
-view = env.AlwaysBuild(env.Alias("view", [], "evince output/slides.pdf &"))
-Depends(view, ['output/slides.pdf'])
+pdf_file = name + '.pdf'
+tex_file = name + '.tex'
+bib_file = name + '.bib'
+
+target = os.path.join('output', pdf_file)
+
+pdf = env.PDF(target=target, source=tex_file)
+Depends(pdf, [tex_file, bib_file])
+
+view = env.AlwaysBuild(env.Alias("view", [], "evince %s &" % target))
+Depends(view, [target])
