@@ -46,9 +46,186 @@
 \begin{frame}[fragile]
     \frametitle{Presentation plan}
 
+    Introduction to software testing:
     \begin{itemize}
-        \item item
+
+        \item Why we need software testing?
+            \begin{itemize}
+                \item approaches to software testing
+            \end{itemize}
+        \item What is automated software testing?
+        \item Is automation always possible?
+        \item What is code coverage?
+            \begin{itemize}
+                \item common gotchas and pitfalls
+            \end{itemize}
     \end{itemize}
+
+    Automated software testing in Python:
+    \begin{itemize}
+        \item Testing frameworks in Python
+        \item Writing tests with py.test
+        \item
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Verification of computer programs}
+    \framesubtitle{Subtitle}
+
+    \begin{itemize}
+        \item manual
+            \begin{itemize}
+                \item very prone to human errors
+                \item can be very cheap in some cases (GUIs, web applications)
+            \end{itemize}
+        \item automated (*)
+            \begin{itemize}
+                \item write tests once and run many times (different architectures,
+                environmental conditions, inputs and outputs (parametrization))
+                \item allow randomized test suites
+            \end{itemize}
+        \item proving
+            \begin{itemize}
+                \item works only for trivial programs
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Humans and software testing}
+    \framesubtitle{Subtitle}
+
+    \begin{equation*}
+        \mbox{automated} \not= \mbox{autonomous}
+    \end{equation*}
+    \vskip+0.5cm
+    Automated software testing \structure{requires human assist} to:
+    \begin{itemize}
+        \item create test suites
+        \item analyze test results
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Approaches to software testing}
+    \framesubtitle{Black--Box and White--Box}
+
+    Black--Box testing:
+    \begin{itemize}
+        \item data-driven testing
+        \item unconcerned about internal behavior and structure of the program
+        \item find IOs for which program doesn't conform to the specification
+        \item {\color{red} cons}: requires exhaustive input testing which is impossible
+    \end{itemize}
+    White--Box testing:
+    \begin{itemize}
+        \item logic-driven testing
+        \item permits to examine internal structure of the program
+        \item derive test data (IOs) from examination of program's logic
+        \item {\color{red} cons}: very of then neglects specification of the program
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing all execution paths}
+    \framesubtitle{Subtitle}
+
+    \begin{itemize}
+        \item
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Program testing guidelines}
+    \framesubtitle{Subtitle}
+
+    \begin{itemize}
+        \item A necessary part of a test case is a definition of the expected
+        output or result.
+        \item A programmer should avoid attempting to test his own program.
+        \item A programming organization should not test its own programs.
+        \item Thoroughly inspect the results of each test.
+        \item Test cases must be written for input conditions that are
+            \structure{invalid and unexpected}, as well as for those that are
+            \structure{valid and expected}.
+        \item Examining a program to see if it does not do what it is supposed
+        to do is only half the battle; the other half is seeing whether
+        the program does what it is not supposed to do.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Program testing guidelines}
+    \framesubtitle{Subtitle}
+
+    \begin{itemize}
+        \item Avoid throwaway test cases unless the program is truly a
+        throwaway program.
+        \item Do not plan a testing effort under the tacit assumption that no
+        errors will be found.
+        \item The probability of the existence of more errors in a section of a
+        program is proportional to the number of errors already found in
+        that section.
+        \item Testing is an extremely creative and intellectually challenging
+        task.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Software testing frameworks in Python}
+    \framesubtitle{Subtitle}
+
+    \begin{itemize}
+        \item unittest
+        \item nosetests
+        \item py.test
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Introduction to py.test}
+    \framesubtitle{Subtitle}
+
+    \begin{python}
+# content of test_example.py
+def func(x):
+    return x + 1
+
+def test_func():
+    assert func(3) == 4
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing exceptions}
+    \framesubtitle{Subtitle}
+
+    \begin{python}
+# content of test_example.py
+import pytest
+
+def func(x):
+    if x <= 0:
+        raise ValueError("positive value expected")
+    else:
+        return x + 1
+
+def test_func():
+    assert func(3) == 4
+
+    with pytest.raises(ValueError):
+        func(-1)
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Literature}
+    \framesubtitle{Subtitle}
+
+    Glenford J. Myers
+    The art of software testing, 2nd edition,
+    John Wiley and Sons, Inc., 2004
 \end{frame}
 
 \begin{frame}[fragile]
