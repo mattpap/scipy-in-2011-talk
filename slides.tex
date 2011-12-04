@@ -46,55 +46,68 @@
 \begin{frame}[fragile]
     \frametitle{Presentation plan}
 
-    Introduction to software testing:
     \begin{itemize}
-
         \item Why we need software testing?
+        \item Approaches to software testing
+        \item Guidelines for proper software testing
+        \item Automated software testing in Python:
             \begin{itemize}
-                \item approaches to software testing
+                \item Testing frameworks in Python
+                \item Writing tests with py.test
+                \item Testing web applications with selenium
             \end{itemize}
-        \item What is automated software testing?
-        \item Is automation always possible?
-        \item What is code coverage?
+        \item Analyzing code coverage with tests:
             \begin{itemize}
+                \item the \pyth{coverage} module
                 \item common gotchas and pitfalls
             \end{itemize}
     \end{itemize}
+\end{frame}
 
-    Automated software testing in Python:
+\begin{frame}[fragile]
+    \frametitle{Why we need software testing?}
+
     \begin{itemize}
-        \item Testing frameworks in Python
-        \item Writing tests with py.test
-        \item
+        \item useful software is large and very, very complex
+        \item no one knows about every aspect of the project
+        \item the same software has to run on different devices,
+        platforms, operating systems, etc.
+        \item humans tend to make mistakes
+        \item your job or even life (if you use the software
+        yourself) may depend on software correctness
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Verification of computer programs}
-    \framesubtitle{Subtitle}
 
     \begin{itemize}
         \item manual
             \begin{itemize}
                 \item very prone to human errors
-                \item can be very cheap in some cases (GUIs, web applications)
+                \item requires detailed software specification
+                \item can be very cheap in some cases (testing GUIs, web applications
+                and other interactive software)
             \end{itemize}
+        \pause
         \item automated (*)
             \begin{itemize}
                 \item write tests once and run many times (different architectures,
-                environmental conditions, inputs and outputs (parametrization))
-                \item allow randomized test suites
+                operating systems, environmental conditions, etc.)
+                \item allow randomized test suites and parametrization of tests
             \end{itemize}
-        \item proving
+        \pause
+        \item formal methods
             \begin{itemize}
-                \item works only for trivial programs
+                \item doesn't work well for large programs
+                \item very expensive and time demanding
+                \item used when cost of failure is extremely high
             \end{itemize}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Humans and software testing}
-    \framesubtitle{Subtitle}
 
     \begin{equation*}
         \mbox{automated} \not= \mbox{autonomous}
@@ -108,17 +121,17 @@
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Approaches to software testing}
-    \framesubtitle{Black--Box and White--Box}
+    \frametitle{Approaches to software testing (1)}
 
-    Black--Box testing:
+    \structure{Black--Box} testing:
     \begin{itemize}
         \item data-driven testing
         \item unconcerned about internal behavior and structure of the program
         \item find IOs for which program doesn't conform to the specification
         \item {\color{red} cons}: requires exhaustive input testing which is impossible
     \end{itemize}
-    White--Box testing:
+    \pause
+    \structure{White--Box} testing:
     \begin{itemize}
         \item logic-driven testing
         \item permits to examine internal structure of the program
@@ -128,45 +141,59 @@
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Testing all execution paths}
-    \framesubtitle{Subtitle}
+    \frametitle{Approaches to software testing (2)}
 
+    \structure{bottom--up} testing:
     \begin{itemize}
-        \item
+        \item test terminal modules first and then proceed to modules with dependencies
+        \item {\color{green} pros}: encourages incremental development of software
+        \item {\color{red} cons}: the skeletal program is available very late
+    \end{itemize}
+    \pause
+    \structure{top-down} testing:
+    \begin{itemize}
+        \item test top--level modules first and then proceed with other modules
+        \item {\color{green} pros}: the "big picture" is visible very soon
+        \item {\color{red} cons}: no straightforward way to choose order of modules for testing
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Program testing guidelines}
-    \framesubtitle{Subtitle}
+    \frametitle{Program testing guidelines (1)}
 
     \begin{itemize}
         \item A necessary part of a test case is a definition of the expected
         output or result.
+        \pause
         \item A programmer should avoid attempting to test his own program.
+        \pause
         \item A programming organization should not test its own programs.
+        \pause
         \item Thoroughly inspect the results of each test.
+        \pause
         \item Test cases must be written for input conditions that are
             \structure{invalid and unexpected}, as well as for those that are
             \structure{valid and expected}.
-        \item Examining a program to see if it does not do what it is supposed
-        to do is only half the battle; the other half is seeing whether
-        the program does what it is not supposed to do.
+        \item Examining a program to see if it does not do what it \structure{is supposed
+        to do} is only half the battle; the other half is seeing whether
+        the program does what it \structure{is not supposed to do}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Program testing guidelines}
-    \framesubtitle{Subtitle}
+    \frametitle{Program testing guidelines (2)}
 
     \begin{itemize}
         \item Avoid throwaway test cases unless the program is truly a
         throwaway program.
+        \pause
         \item Do not plan a testing effort under the tacit assumption that no
         errors will be found.
+        \pause
         \item The probability of the existence of more errors in a section of a
         program is proportional to the number of errors already found in
         that section.
+        \pause
         \item Testing is an extremely creative and intellectually challenging
         task.
     \end{itemize}
@@ -174,71 +201,396 @@
 
 \begin{frame}[fragile]
     \frametitle{Software testing frameworks in Python}
-    \framesubtitle{Subtitle}
 
-    \begin{itemize}
-        \item unittest
-        \item nosetests
-        \item py.test
-    \end{itemize}
+    \begin{columns}
+        \begin{column}[l]{0.3\textwidth}
+            \begin{itemize}
+                \item unittest
+                \item py.test (*)
+                \item nose
+            \end{itemize}
+        \end{column}
+        \begin{column}[l]{0.5\textwidth}
+            \includegraphics[scale=0.4]{images/testing.jpg}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Introduction to py.test}
-    \framesubtitle{Subtitle}
 
+    \begin{itemize}
+        \item mature, well supported tool
+        \item provides no-boilerplate testing
+        \item support complex test setups
+        \item integrates many common testing methods
+    \end{itemize}
+    \pause
+    Example:
     \begin{python}
-# content of test_example.py
-def func(x):
+def add_one(x):
     return x + 1
 
-def test_func():
-    assert func(3) == 4
+def test_add_one():
+    assert add_one(3) == 4
     \end{python}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Testing exceptions}
-    \framesubtitle{Subtitle}
+    \frametitle{Testing exceptions with py.test}
 
     \begin{python}
-# content of test_example.py
 import pytest
 
-def func(x):
+def add_one(x):
     if x <= 0:
         raise ValueError("positive value expected")
     else:
         return x + 1
 
-def test_func():
-    assert func(3) == 4
+def test_add_one():
+    assert add_one(3) == 4
 
     with pytest.raises(ValueError):
-        func(-1)
+        add_one(-1)
     \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing web applications (1)}
+
+    \begin{itemize}
+        \item testing software is not always as simple as executing a function
+        or a block of code and compare its result to a well known value or
+        \item web applications (getting more and more popular and important
+        recently) testing is very demanding:
+            \pause
+            \begin{itemize}
+                \item there are different web browsers
+                \item web browsers often disregard web standards
+                \item we have to test features like:
+                    \pause
+                    \begin{itemize}
+                        \item clicking/hovering elements
+                        \item form submission
+                        \item drag \& drop
+                        \item AJAX, etc.
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing web applications (2)}
+
+    Using \structure{\pyth{selenium}}:
+    \begin{python}
+from selenium import selenium
+sel = selenium('localhost', 4444, '*firefox', 'url')
+
+sel.start()
+sel.open('page')
+
+sel.type("css=input[name=q]", "abc")
+sel.submit("css=form.search")
+
+sel.is_text_present("from sympy.abc import x")
+
+sel.stop()
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing web applications (3)}
+
+In a script we have to give a page chance to load:
+    \begin{python}
+from selenium import selenium
+sel = selenium('localhost', 4444, '*firefox', 'url')
+sel.start()
+sel.open('page')
+sel.wait_for_page_to_load(10000) # milliseconds
+...
+    \end{python}
+\pause
+We can also turn this code into a test case:
+    \begin{python}
+...
+sel.type("css=input[name=q]", "abc")
+sel.submit("css=form.search")
+sel.wait_for_page_to_load(10000) # milliseconds
+assert sel.is_text_present("from sympy.abc import x")
+...
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (1)}
+
+    Lets define a simple function for \structure{finding minimum
+    and maximum values} of iterable containers \structure{simultaneously}:
+    \begin{python}
+def minmax(*args):
+    """Find minimum and maximum values simultaneously. """
+    if len(args) > 1:
+        return minmax(args)
+    iterable = iter(args[0])
+    min = max = iterable.next()
+    for item in iterable:
+        if item < min:
+            min = item
+        elif item > max:
+            max = item
+    return min, max
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (2)}
+
+    We can \structure{experiment} with the function in the terminal:
+    \begin{python}
+ >>> minmax(2, 1, 4, 3)
+(1, 4)
+ >>> minmax([2, 1, 4, 3])
+(1, 4)
+    \end{python}
+    \pause
+    We can also \structure{write a test suite} for \pyth{minmax()}:
+    \begin{python}
+def test_minmax():
+    assert minmax(1, 2, 3, 4) == (1, 4)
+    assert minmax([1, 2, 3, 4]) == (1, 4)
+    \end{python}
+    \pause
+    For future reference, I put \pyth{minmax()} and \pyth{test_minmax()}
+    in \verb+test_minmax.py+.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (3)}
+
+    Lets use \structure{\pyth{coverage}} module to see how many lines of
+    \verb+test_minmax.py+ are covered after executing \pyth{test_minmax()}:
+    \begin{python}
+import coverage
+cov = coverage.coverage(source=["test_minmax.py"])
+cov.start()
+import test_minmax
+test_minmax.test_minmax()
+cov.stop()
+print cov.report()
+Name          Stmts   Miss  Cover   Missing
+-------------------------------------------
+test_minmax      14      0   100%
+    \end{python}
+    \pause
+    Nice, \structure{100\% code coverage}.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (4)}
+
+    However, 100\% code coverage with tests doesn't imply in this case
+    that \pyth{minmax()} handle corner cases well:
+    \begin{python}
+In [1]: from test_minmax import minmax
+
+In [2]: minmax()
+...
+IndexError: tuple index out of range
+
+In [3]: minmax([])
+...
+StopIteration:
+    \end{python}
+    \pause
+    This doesn't look appealing to the end user and \structure{exposes too much
+    unnecessary details about the internal implementation} of \pyth{minmax()}.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (5)}
+
+    100\% code coverage with tests:
+    \begin{itemize}
+        \item doesn't imply correctness of code or conformance to specification
+        \pause
+        \item is very important in interpreted programming languages:
+            \begin{itemize}
+                \item there's high chance that trivial mistakes (e.g. typos) exist
+                in untested branches and will crash the program with \pyth{NameError},
+                \pyth{ImportError} or other exception
+                \item using audit tools like \verb+pyflakes+ and editor bindings
+                for them (e.g. \verb+vim-pyflakes+) can help a lot, but doesn't
+                imply that 100\% code coverage is unimportant
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (6)}
+
+    {\color{green} do}:
+    \begin{itemize}
+        \item make your goal to cover all branches of code to avoid
+        trivial but expensive mistakes and bugs
+        \item use bottom--up approach to make sure that your tests
+        verify not only the "big picture" but also all functions
+        and modules alone
+        \item code coverage of a particular unit should approach
+        100\% no matter whether you test the whole project or just
+        the unit alone
+    \end{itemize}
+    \pause
+    {\color{red} don't}:
+    \begin{itemize}
+        \item assume that 100\% code coverage means correct programs
+        \item enforce 100\% coverage by trivializing the test suite
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Code coverage with tests (7)}
+
+    100\% code coverage with tests won't help you to prevent bugs:
+    \begin{itemize}
+        \item that are caused by missing branches in the code
+        \pause
+        \item that show up for certain inputs, e.g.:
+            \begin{itemize}
+                \item very large or very small numbers (overflow, underflow)
+                \item large data structures (memory overrun, recursion depth)
+            \end{itemize}
+        \pause
+        \item that show up on certain platforms, e.g.:
+            \begin{itemize}
+                \item missing modules, API functions (e.g. posix on Windows)
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing by example (1)}
+
+    Lets revise \pyth{minmax()} and improve its docstring:
+    \begin{python}
+def minmax(*args):
+    """
+    Find minimum and maximum values simultaneously.
+
+    Example
+    -------
+    >>> minmax(2, 1, 4, 3)
+    (1, 4)
+    >>> minmax([2, 1, 4, 3])
+    (1, 4)
+
+    """
+    ...
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing by example (2)}
+
+    We can verify correctness of examples using \structure{\pyth{doctest}} module:
+    \begin{python}
+ >>> import doctest
+ >>> import test_minmax
+ >>> doctest.testmod(test_minmax)
+TestResults(failed=0, attempted=2)
+    \end{python}
+    \pause
+    This tells us that all doctests in \verb+test_minmax.py+ are correct.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing by example (3)}
+
+    If we make a mistake in an example, e.g.:
+    \begin{python}
+def minmax(*args):
+    """
+    Find minimum and maximum values simultaneously.
+
+    Example
+    -------
+    >>> minmax(2, 1, 4, 3)
+    (1, 4)
+    >>> minmax([2, 1, 4, 3])
+    (3, 4)
+
+    """
+    ...
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing by example (4)}
+
+    \pyth{doctest} will show us what is the problem:
+    \begin{python}
+ >>> import doctest, test_minmax
+ >>> doctest.testmod(test_minmax)
+********************************************************
+File "test_minmax.py", line 9, in test_minmax.minmax
+Failed example:
+    minmax([2, 1, 4, 3])
+Expected:
+    (3, 4)
+Got:
+    (1, 4)
+********************************************************
+1 items had failures:
+   1 of   2 in test_minmax.minmax
+***Test Failed*** 1 failures.
+TestResults(failed=1, attempted=2)
+    \end{python}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Testing by example (5)}
+
+    {\color{green} pros:}
+    \begin{itemize}
+        \item allows for automatic verification that examples work
+        \item gives limited code testing ability
+        \item adds quality to documentation
+    \end{itemize}
+    \pause
+    {\color{red} cons:}
+    \begin{itemize}
+        \item relies on comparing texts, so is very fragile in nontrivial cases
+        \item used improperly can make docstrings long and unpleasant to read
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Summing up}
+
+    \begin{itemize}
+        \item testing is an important part of software development process
+        \pause
+        \item better testing means better software means less work in the
+        long term and more satisfied customers
+        \pause
+        \item Python has excellent tools for automation of testing process
+        \pause
+        \item there are tools for advanced automated testing setups (GUIs,
+        web applications, web servers, etc.)
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
     \frametitle{Literature}
-    \framesubtitle{Subtitle}
-
-    Glenford J. Myers
-    The art of software testing, 2nd edition,
-    John Wiley and Sons, Inc., 2004
-\end{frame}
-
-\begin{frame}[fragile]
-    \frametitle{Title}
-    \framesubtitle{Subtitle}
 
     \begin{itemize}
-        \item item
+        \item Glenford J. Myers, \emph{The art of software testing}, 2nd edition, John Wiley and Sons, Inc., 2004
+        \item http://docs.python.org/library/doctest.html
+        \item http://www.seleniumhq.org
+        \item http://pytest.org
     \end{itemize}
-    \pause
-    \begin{python}
-    code
-    \end{python}
 \end{frame}
 
 \begin{frame}
@@ -247,5 +599,17 @@ def test_func():
         \textbf{\LARGE Thank you for your attention!}
     \end{center}
 \end{frame}
+
+%\begin{frame}[fragile]
+%    \frametitle{Title}
+%
+%    \begin{itemize}
+%        \item item
+%    \end{itemize}
+%    \pause
+%    \begin{python}
+%    code
+%    \end{python}
+%\end{frame}
 
 \end{document}
